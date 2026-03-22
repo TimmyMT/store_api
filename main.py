@@ -20,4 +20,4 @@ async def no_result_found_handler(request: Request, exc: NoResultFound):
         content={"detail": "Item not found"},
     )
 
-app.include_router(items.router)
+app.include_router(items.router, prefix="/api/v1")
