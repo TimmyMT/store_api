@@ -41,3 +41,6 @@ app/
 ├── models/          # (опционально) ORM модели
 │   └── item.py
 ```
+
+## psql
+psql -U postgres
