@@ -44,3 +44,20 @@ app/
 
 ## psql
 psql -U postgres
+
+## Migrations
+Применить все миграции до последней версии
+```
+alembic revision -m "описание миграции"
+```
+
+Применить конкретную ревизию
+```
+alembic upgrade <revision_id>
+```
+
+Откат на одну миграцию назад
+```
+alembic downgrade -1
+```
+
