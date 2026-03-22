@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.schemas.item import ItemCreate, ItemResponse, ItemUpdate
-from app.services.item_service import create_item, get_items_list, get_item_by_id
+from app.services.item_service import create_item, get_items_list, get_item_by_id, update_item_by_id, delete_item_by_id
 from app.db import SessionLocal
 
 router = APIRouter(prefix="/items", tags=["Items"])
@@ -31,15 +31,10 @@ def get_item(item_id: int, db: Session = Depends(get_db)):
 
 @router.put("/{item_id}", response_model=ItemResponse)
 def update_item(item_id: int, item_data: ItemUpdate, db: Session = Depends(get_db)):
-    item = get_item_by_id(db, item_id)
-    item.name = item_data.name
-    item.price = item_data.price
-    db.commit()
-    db.refresh(item)
+    item = update_item_by_id(db, item_id, item_data)
     return item
 
 @router.delete("/{item_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_item(item_id: int, db: Session = Depends(get_db)):
-    item = get_item_by_id(db, item_id)
-    db.delete(item)
-    db.commit()
+    delete_item_by_id(db, item_id)
+    return None
