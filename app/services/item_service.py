@@ -9,21 +9,21 @@ def create_item(db: Session, item_data: ItemCreate) -> Item:
     db.refresh(item)
     return item
 
-def get_items_list(db: Session) -> list[Item]:
+def get_items(db: Session) -> list[Item]:
     return db.query(Item).all()
 
-def get_item_by_id(db: Session, item_id: int) -> Item:
+def get_item(db: Session, item_id: int) -> Item:
     return db.query(Item).filter(Item.id == item_id).one()
 
-def update_item_by_id(db: Session, item_id: int, item_data: ItemUpdate) -> Item:
-    item = get_item_by_id(db, item_id)
+def update_item(db: Session, item_id: int, item_data: ItemUpdate) -> Item:
+    item = get_item(db, item_id)
     item.name = item_data.name
     item.price = item_data.price
     db.commit()
     db.refresh(item)
     return item
 
-def delete_item_by_id(db: Session, item_id: int) -> None:
-    item = get_item_by_id(db, item_id)
+def delete_item(db: Session, item_id: int) -> None:
+    item = get_item(db, item_id)
     db.delete(item)
     db.commit()
